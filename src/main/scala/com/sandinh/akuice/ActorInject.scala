@@ -12,6 +12,12 @@ trait ActorInject {
 
   protected def injectActor[A <: Actor](name: String)(implicit factory: ActorRefFactory, tag: ClassTag[A]): ActorRef =
     factory.actorOf(Props(classOf[ActorProducer[A]], injector, tag.runtimeClass), name)
+
+  protected def injectActor[A <: Actor, F <: ActorFactory[A]](args: Any*)(implicit factory: ActorRefFactory, tag: ClassTag[A], ftag: ClassTag[F]): ActorRef =
+    factory.actorOf(Props(classOf[AssistedActorProducer[A]], injector, tag.runtimeClass, ftag.runtimeClass, args))
+
+  protected def injectActor[A <: Actor, F <: ActorFactory[A]](name: String, args: Seq[Any])(implicit factory: ActorRefFactory, tag: ClassTag[A], ftag: ClassTag[F]): ActorRef =
+    factory.actorOf(Props(classOf[AssistedActorProducer[A]], injector, tag.runtimeClass, ftag.runtimeClass, args), name)
 }
 
 trait TopActorInject extends ActorInject {

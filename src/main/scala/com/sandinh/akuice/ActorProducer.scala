@@ -7,3 +7,13 @@ class ActorProducer[A <: Actor](injector: Injector, clazz: Class[A]) extends Ind
   def actorClass = clazz
   def produce() = injector.getBinding(clazz).getProvider.get()
 }
+
+trait ActorFactory[A <: Actor] {
+  def create(args: Any*): A
+}
+
+class AssistedActorProducer[A <: Actor](injector: Injector, clazz: Class[A],
+                                        factoryClazz: Class[_ <: ActorFactory[A]], args: Seq[Any]) extends IndirectActorProducer {
+  def actorClass = clazz
+  def produce() = injector.getBinding(factoryClazz).getProvider.get().create(args: _*)
+}
