@@ -44,7 +44,9 @@ class AssistedChildActor(foo: String, arg1: Int, arg2: String) extends Actor {
 
 object AssistedChildActor {
   @Singleton
-  class Factory @Inject() (@Named("fooName") foo: String) extends ActorFactory[AssistedChildActor] {
+  class Factory @Inject() (@Named("fooName") foo: String)
+    extends ActorFactory[AssistedChildActor]
+  {
     def create(args: Any*): AssistedChildActor = args match {
       case Seq(arg1: Int, arg2: String) => new AssistedChildActor(foo, arg1, arg2)
       case _                            => throw new IllegalArgumentException
