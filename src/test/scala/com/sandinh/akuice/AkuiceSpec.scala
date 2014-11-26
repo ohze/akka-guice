@@ -19,13 +19,14 @@ class AkuiceSpec(system: ActorSystem) extends TestKit(system)
       service.hello(self)
 
       val foo = "[the fooName value]"
-      receiveN(3) map {
-        case (actorName: String, `foo`, "hello!")                           => ("fromChild", actorName)
-        case (actorName: String, `foo`, "hello!", i: Integer, "arg2 value") => ("fromAssistedChild", i.toString)
+      receiveN(4) map {
+        case (actorName: String, `foo`, "hello!")                           => "fromChild" -> actorName //message from ChildActor
+        case (actorName: String, `foo`, "hello!", i: Integer, "arg2 value") => i -> actorName //message from AssistedChildActor
       } should contain theSameElementsAs Seq(
-        "fromChild" -> "$a", //auto generated actor name
+        "fromChild" -> "$a", //"$a" is auto generated actor name
         "fromChild" -> "child2",
-        "fromAssistedChild" -> "1"
+        1 -> "$b", //"$b" auto generated actor name
+        2 -> "assistedChild2"
       )
     }
   }

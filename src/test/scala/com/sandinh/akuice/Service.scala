@@ -6,7 +6,7 @@ import com.google.inject.Injector
 
 @Singleton
 class Service @Inject() (val injector: Injector) extends ActorInject {
-  private[this] val parentRef = injectTopActor[ParentActor]
+  private val parentRef = injectTopActor[ParentActor]
 
   def hello(sender: ActorRef) = parentRef.tell("hello!", sender)
 }
