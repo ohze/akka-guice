@@ -5,8 +5,8 @@ import akka.actor.ActorRef
 import com.google.inject.Injector
 
 @Singleton
-class Service @Inject() (val injector: Injector) extends TopActorInject {
-  private[this] val parentRef = injectActor[ParentActor]
+class Service @Inject() (val injector: Injector) extends ActorInject {
+  private[this] val parentRef = injectTopActor[ParentActor]
 
   def hello(sender: ActorRef) = parentRef.tell("hello!", sender)
 }

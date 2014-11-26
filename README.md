@@ -20,8 +20,12 @@ This is a very simple (so very stable) scala library for injecting [Akka](http:/
 ## How?
 
 1. install [akka-guice from maven center](http://search.maven.org/#search|ga|1|g%3A%22com.sandinh%22%20akka-guice)
+ ex, add to build.sbt:
+  `libraryDependencies += "com.sandinh" %% "akka-guice" % "2.0.0"`
 
-2. see [the test files](src/test/scala/com/sandinh/akuice)
+2. use akka-guice
+
+see [the test files](src/test/scala/com/sandinh/akuice) & source code for detail. It's very simple!
 
 + ChildActor: The `foo` parameter will be injected
 
@@ -57,20 +61,20 @@ class ParentActor @Inject() (val injector: Injector) extends Actor with ActorInj
   private val child1 = injectActor[ChildActor]
   private val child2 = injectActor[ChildActor]("child2")
   private val assistedChild = injectActor[AssistedChildActor, AssistedChildActor.Factory](1, "arg2 value")
-
   ...
 }
 ```
 
-+ Service.scala: This is not an Actor but because it extends `com.sandinh.akuice.TopActorInject` => we can also using `injectActor` method.
++ Service.scala: This is not an Actor but because it extends `com.sandinh.akuice.ActorInject` =>
+ we can use `injectTopActor` method.
 
-  Note that, the parentRef actor is a directly child of ActorSystem because the `injectActor` method will create the actor
-  as a child of the `implicit ActorRefFactory` in the scope and `TopActorInject` define a implicit ActorSystem method
+  Note that, we can also use `injectActor` method. The injected actor will be a child of
+   the `implicit ActorRefFactory` in the scope.
 
 ```scala
 @Singleton
-class Service @Inject() (val injector: Injector) extends TopActorInject {
-  private val parentRef = injectActor[ParentActor]
+class Service @Inject() (val injector: Injector) extends ActorInject {
+  private val parentRef = injectTopActor[ParentActor]
 
   def hello(sender: ActorRef) = parentRef.tell("hello!", sender)
 }
@@ -103,6 +107,9 @@ class AkkaModule(system: ActorSystem) extends AbstractModule {
 
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
+
+##### v2.0.0
+remove `trait TopActorInject`. use `injectTopActor` method to inject top actor
 
 ##### v1.2.0
 + cross compile to scala 2.10.4 & 2.11.4
