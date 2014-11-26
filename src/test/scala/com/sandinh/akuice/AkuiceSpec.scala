@@ -15,17 +15,18 @@ class AkuiceSpec(system: ActorSystem) extends TestKit(system)
     "inject actors: receive replied messages when call Service.hello" in {
       val injector = Guice.createInjector(new AkkaModule(system))
       val service = injector.getInstance(classOf[Service])
+
       service.hello(self)
 
-      expectMsgPF() {
-        case (path: String, "[the fooName value]", "hello!") //message from ParentActor.child2
-        if path.endsWith("/child2") ||
-          //message from ParentActor.child1
-          path.endsWith("/$a/$a") => "ok"
-
-        //message from ParentActor.assistedChild
-        case (path: String, "[the fooName value]", "hello!", i: Integer, "arg2 value") if i == 1 => "ok"
-      }
+      val foo = "[the fooName value]"
+      receiveN(3) map {
+        case (actorName: String, `foo`, "hello!")                           => ("fromChild", actorName)
+        case (actorName: String, `foo`, "hello!", i: Integer, "arg2 value") => ("fromAssistedChild", i.toString)
+      } should contain theSameElementsAs Seq(
+        "fromChild" -> "$a", //auto generated actor name
+        "fromChild" -> "child2",
+        "fromAssistedChild" -> "1"
+      )
     }
   }
 }

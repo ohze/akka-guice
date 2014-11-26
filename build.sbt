@@ -2,15 +2,14 @@ organization := "com.sandinh"
 
 name := "akka-guice"
 
-version := "1.1.0"
+version := "1.2.0"
 
 scalaVersion := "2.11.4"
 
 crossScalaVersions := Seq("2.11.4", "2.10.4")
 
 scalacOptions ++= Seq(
-  "-encoding", "UTF-8", "-deprecation", "-feature",
-  "-Xmigration", "-Xfuture", //"–Xverify", "-Xcheck-null",
+  "-encoding", "UTF-8", "-deprecation", "-feature", "-Xfuture", //"–Xverify", "-Xcheck-null",
   "-Ywarn-dead-code", "-Ydead-code", "-Yinline-warnings" //"-Yinline", "-Ystatistics",
 )
 

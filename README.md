@@ -3,7 +3,7 @@ akka-guice
 
 ## What?
 
-This is a simple scala library for injecting [Akka](http://akka.io/) using [Guice](https://github.com/google/guice/).
+This is a very simple (so very stable) scala library for injecting [Akka](http://akka.io/) using [Guice](https://github.com/google/guice/).
 
 ## Why?
 [Google search akka guice](https://www.google.com.vn/search?q=akka+guice) => some articles:
@@ -11,6 +11,9 @@ This is a simple scala library for injecting [Akka](http://akka.io/) using [Guic
 + [Akka Dependency Injection](http://letitcrash.com/post/55958814293/akka-dependency-injection) => just a guide.
 
 + [Akka Scala Guice Activator](http://typesafe.com/activator/template/activator-akka-scala-guice) => just a (complex) demo.
+
++ [Akka Guice Integration for Playframework](https://github.com/chanan/AkkaGuice) => I think akka-guice integration should
+  NOT depends on Play!
 
 => So I create this library :D
 
@@ -23,11 +26,7 @@ This is a simple scala library for injecting [Akka](http://akka.io/) using [Guic
 + ChildActor: The `foo` parameter will be injected
 
 ```scala
-class ChildActor @Inject() (@Named("fooName") foo: String) extends Actor {
-  def receive = {
-    case msg: String => sender() ! (self.path.toString, foo, msg)
-  }
-}
+class ChildActor @Inject() (@Named("fooName") foo: String) extends Actor ...
 ```
 
 + AssistedChildActor:
@@ -36,17 +35,10 @@ class ChildActor @Inject() (@Named("fooName") foo: String) extends Actor {
   Parameter `foo` of AssistedChildActor's constructor is taken from Guice. `arg1` & `arg2` from the caller.
 
 ```scala
-class AssistedChildActor(foo: String, arg1: Int, arg2: String) extends Actor {
-  def receive = {
-    case msg: String => sender() ! (self.path.toString, foo, msg, arg1, arg2)
-  }
-}
+class AssistedChildActor(foo: String, arg1: Int, arg2: String) extends Actor ...
 
 object AssistedChildActor {
-  @Singleton
-  class Factory @Inject() (@Named("fooName") foo: String)
-    extends ActorFactory[AssistedChildActor]
-  {
+  class Factory @Inject() (@Named("fooName") foo: String) extends ActorFactory[AssistedChildActor] {
     def create(args: Any*): AssistedChildActor = args match {
       case Seq(arg1: Int, arg2: String) => new AssistedChildActor(foo, arg1, arg2)
       case _                            => throw new IllegalArgumentException
@@ -55,35 +47,30 @@ object AssistedChildActor {
 }
 ```
 
-+ ParentActor: extends com.sandinh.akuice.ActorInject & use injectActor method to inject child actors.
-  The `injectActor` method need an implicit akka.actor.ActorRefFactory to create actor (using ActorRefFactory#actorOf method).
++ ParentActor: `extends com.sandinh.akuice.ActorInject` & use `injectActor` method to inject child actors.
+  The `injectActor` method need an `implicit akka.actor.ActorRefFactory` to create actor (using ActorRefFactory#actorOf method).
   
-  ParentActor extends Actor => it has an implicit val context: ActorContext (ActorContext extends ActorRefFactory).
+  `ParentActor extends Actor` => it has an `implicit val context: ActorContext` (`ActorContext` extends `ActorRefFactory`).
 
 ```scala
 class ParentActor @Inject() (val injector: Injector) extends Actor with ActorInject {
-  private[this] val child1 = injectActor[ChildActor]
-  private[this] val child2 = injectActor[ChildActor]("child2")
-  private[this] val assistedChild =
-    injectActor[AssistedChildActor, AssistedChildActor.Factory](1, "arg2 value")
+  private val child1 = injectActor[ChildActor]
+  private val child2 = injectActor[ChildActor]("child2")
+  private val assistedChild = injectActor[AssistedChildActor, AssistedChildActor.Factory](1, "arg2 value")
 
-  def receive = {
-    case x =>
-      child1 forward x
-      child2 forward x
-      assistedChild forward x
-  }
+  ...
 }
 ```
 
-+ Service.scala: This is not an Actor but because it extends com.sandinh.akuice.TopActorInject => we can also using injectActor method.
++ Service.scala: This is not an Actor but because it extends `com.sandinh.akuice.TopActorInject` => we can also using `injectActor` method.
 
-  Note that, the parentRef actor is a directly child of ActorSystem.
+  Note that, the parentRef actor is a directly child of ActorSystem because the `injectActor` method will create the actor
+  as a child of the `implicit ActorRefFactory` in the scope and `TopActorInject` define a implicit ActorSystem method
 
 ```scala
 @Singleton
 class Service @Inject() (val injector: Injector) extends TopActorInject {
-  private[this] val parentRef = injectActor[ParentActor]
+  private val parentRef = injectActor[ParentActor]
 
   def hello(sender: ActorRef) = parentRef.tell("hello!", sender)
 }
@@ -95,7 +82,7 @@ class Service @Inject() (val injector: Injector) extends TopActorInject {
 class AkkaModule(system: ActorSystem) extends AbstractModule {
   def configure(): Unit = {
     bind(classOf[ActorSystem]).toInstance(system)
-    bindConstant().annotatedWith(Names.named("fooName")).to("[the fooName value]")
+    //other binds
   }
 }
 ```
@@ -109,20 +96,23 @@ class AkkaModule(system: ActorSystem) extends AbstractModule {
       val service = injector.getInstance(classOf[Service])
       service.hello(self)
 
-      expectMsgPF() {
-        case (path: String, "[the fooName value]", "hello!")
-          //message from ParentActor.child2
-          if path.endsWith("/child2") ||
-            //message from ParentActor.child1
-            path.endsWith("/$a/$a") => "ok"
-
-        //message from ParentActor.assistedChild
-        case (path: String, "[the fooName value]", "hello!", i: Integer, "arg2 value")
-          if i == 1 => "ok"
-      }
+      //expectMsg ...
     }
   }
 ```
+
+## Changelogs
+we use [Semantic Versioning](http://semver.org/)
+
+##### v1.2.0
++ cross compile to scala 2.10.4 & 2.11.4
++ make `TopActorInject.actorSystem` a `final def` to fix [a invalid error highlight in Intellij](https://youtrack.jetbrains.com/issue/SCL-7924)
+
+##### v1.1.0
+ Support Assisted Inject Actor
+
+##### v1.0.0
+ First release
 
 ## Licence
 This software is licensed under the Apache 2 license:

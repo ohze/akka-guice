@@ -21,5 +21,5 @@ trait ActorInject {
 }
 
 trait TopActorInject extends ActorInject {
-  implicit protected def actorSystem: ActorSystem = injector.getInstance(classOf[ActorSystem])
+  implicit final protected def actorSystem: ActorSystem = injector.getInstance(classOf[ActorSystem])
 }
