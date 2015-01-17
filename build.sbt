@@ -2,11 +2,11 @@ organization := "com.sandinh"
 
 name := "akka-guice"
 
-version := "2.0.0"
+version := "2.0.1"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.5"
 
-crossScalaVersions := Seq("2.11.4", "2.10.4")
+crossScalaVersions := Seq("2.11.5", "2.10.4")
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8", "-deprecation", "-feature", "-Xfuture", //"–Xverify", "-Xcheck-null",
@@ -15,8 +15,8 @@ scalacOptions ++= Seq(
 
 libraryDependencies ++= {
   val guice     = "3.0"
-  val ak        = "2.3.7"
-  val scalatest = "2.2.2"
+  val ak        = "2.3.8"
+  val scalatest = "2.2.3"
   Seq(
     "com.google.inject"   % "guice"         % guice,
     "com.typesafe.akka"   %% "akka-actor"   % ak,

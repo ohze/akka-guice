@@ -108,6 +108,9 @@ class AkkaModule(system: ActorSystem) extends AbstractModule {
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v2.0.1
+update scala 2.11.5, akka 2.3.8
+
 ##### v2.0.0
 remove `trait TopActorInject`. use `injectTopActor` method to inject top actor
 
