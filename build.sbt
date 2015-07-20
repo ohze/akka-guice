@@ -2,7 +2,7 @@ organization := "com.sandinh"
 
 name := "akka-guice"
 
-version := "2.1.0-SNAPSHOT"
+version := "3.0.0-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
@@ -14,7 +14,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.google.inject"   % "guice"         % "4.0",
+  "com.google.inject.extensions" % "guice-assistedinject" % "4.0",
   "com.typesafe.akka"   %% "akka-actor"   % "2.3.12",
   "org.scalatest"       %% "scalatest"    % "2.2.5" % Test,
   "com.typesafe.akka"   %% "akka-testkit" % "2.3.12"  % Test

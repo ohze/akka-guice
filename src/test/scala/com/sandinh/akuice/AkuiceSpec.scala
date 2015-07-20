@@ -5,15 +5,14 @@ import akka.testkit.{ImplicitSender, TestKit}
 import com.google.inject.Guice
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
-class AkuiceSpec(system: ActorSystem) extends TestKit(system)
+class AkuiceSpec extends TestKit(ActorSystem("foo"))
     with ImplicitSender with WordSpecLike with Matchers with BeforeAndAfterAll {
-  def this() = this(ActorSystem("foo"))
 
   override def afterAll() = TestKit.shutdownActorSystem(system)
 
   "Akuice" must {
     "inject actors: receive replied messages when call Service.hello" in {
-      val injector = Guice.createInjector(new AkkaModule(system))
+      val injector = Guice.createInjector(new AkkaModule)
       val service = injector.getInstance(classOf[Service])
 
       service.hello(self)

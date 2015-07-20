@@ -2,8 +2,9 @@ package com.sandinh.akuice
 
 import javax.inject.{Named, Inject}
 import akka.actor.Actor
+import com.google.inject.assistedinject.Assisted
 
-class AssistedChildActor(foo: String, arg1: Int, arg2: String) extends Actor {
+class AssistedChildActor @Inject() (@Named("fooName") foo: String, @Assisted arg1: Int, @Assisted arg2: String) extends Actor {
   def receive = {
     case msg: String =>
       sender() ! (self.path.name, foo, msg, arg1, arg2)
@@ -11,10 +12,7 @@ class AssistedChildActor(foo: String, arg1: Int, arg2: String) extends Actor {
 }
 
 object AssistedChildActor {
-  class Factory @Inject() (@Named("fooName") foo: String) extends ActorFactory[AssistedChildActor] {
-    def create(args: Any*): AssistedChildActor = args match {
-      case Seq(arg1: Int, arg2: String) => new AssistedChildActor(foo, arg1, arg2)
-      case _                            => throw new IllegalArgumentException
-    }
+  trait Factory {
+    def apply(arg1: Int, arg2: String): Actor
   }
 }
