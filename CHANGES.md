@@ -1,6 +1,11 @@
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v3.0.0
++ make ActorProducer `private[akuice]`
++ remove trait ActorFactory, AssistedActorProducer. Should use AkkaGuiceSupport.bindActorFactory instead
++ add dependency: guice-assistedinject
+
 ##### v2.0.1
 update scala 2.11.5, akka 2.3.8
 
