@@ -1,6 +1,9 @@
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v3.1.0
++ update sbt 0.13.9, akka 2.4.0 (drop support for java7, scala 2.10)
+
 ##### v3.0.0
 + make ActorProducer `private[akuice]`
 + remove trait ActorFactory, AssistedActorProducer. Should use AkkaGuiceSupport.bindActorFactory instead
