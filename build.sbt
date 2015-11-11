@@ -6,7 +6,7 @@ version := "3.0.0"
 
 scalaVersion := "2.11.7"
 
-crossScalaVersions := Seq("2.11.7", "2.10.5")
+//crossScalaVersions := Seq("2.11.7", "2.10.5")
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8", "-deprecation", "-feature", "-Xfuture", //"–Xverify", "-Xcheck-null",
@@ -15,7 +15,7 @@ scalacOptions ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-assistedinject" % "4.0",
-  "com.typesafe.akka"   %% "akka-actor"   % "2.3.12",
+  "com.typesafe.akka"   %% "akka-actor"   % "2.4.0",
   "org.scalatest"       %% "scalatest"    % "2.2.5" % Test,
-  "com.typesafe.akka"   %% "akka-testkit" % "2.3.12"  % Test
+  "com.typesafe.akka"   %% "akka-testkit" % "2.4.0" % Test
 )
