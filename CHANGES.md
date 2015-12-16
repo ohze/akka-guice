@@ -1,6 +1,10 @@
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v3.1.1
++ cross compile to scala 2.11.7, 2.12.0-M3
++ update akka 2.4.1
+
 ##### v3.1.0
 + update sbt 0.13.9, akka 2.4.0 (drop support for java7, scala 2.10)
 

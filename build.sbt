@@ -2,22 +2,19 @@ organization := "com.sandinh"
 
 name := "akka-guice"
 
-version := "3.1.0"
+version := "3.1.1"
 
 scalaVersion := "2.11.7"
 
-//crossScalaVersions := Seq("2.11.7", "2.10.5")
+crossScalaVersions := Seq("2.11.7", "2.12.0-M3")
 
-scalacOptions ++= Seq(
-  "-encoding", "UTF-8", "-deprecation", "-feature", "-Xfuture", //"–Xverify", "-Xcheck-null",
-  "-Ywarn-dead-code", "-Ydead-code", "-Yinline-warnings" //"-Yinline", "-Ystatistics",
-)
+scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target:jvm-1.8", "-Ybackend:GenBCode")
 
 libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-assistedinject" % "4.0",
-  "com.typesafe.akka"   %% "akka-actor"   % "2.4.0",
-  "org.scalatest"       %% "scalatest"    % "2.2.5" % Test,
-  "com.typesafe.akka"   %% "akka-testkit" % "2.4.0" % Test
+  "com.typesafe.akka"   %% "akka-actor"   % "2.4.1",
+  "com.typesafe.akka"   %% "akka-testkit" % "2.4.1"     % Test,
+  "org.scalatest"       %% "scalatest"    % "3.0.0-M12" % Test
 )
 
 //misc - to mute intellij warning when load sbt project
