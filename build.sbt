@@ -12,8 +12,8 @@ scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target
 
 libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-assistedinject" % "4.0",
-  "com.typesafe.akka"   %% "akka-actor"   % "2.4.1",
-  "com.typesafe.akka"   %% "akka-testkit" % "2.4.1"     % Test,
+  "com.typesafe.akka"   %% "akka-actor"   % "2.4.2",
+  "com.typesafe.akka"   %% "akka-testkit" % "2.4.2"     % Test,
   "org.scalatest"       %% "scalatest"    % "3.0.0-M12" % Test
 )
 
