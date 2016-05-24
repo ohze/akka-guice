@@ -1,6 +1,10 @@
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v3.1.3
++ update akka 2.4.6, scala 2.11.8 & 2.12.0-M4
++ add travis test for openjdk8
+
 ##### v3.1.2
 + update akka 2.4.2
 + update sbt 0.13.11 & some sbt plugins

@@ -2,7 +2,7 @@ organization := "com.sandinh"
 
 name := "akka-guice"
 
-version := "3.1.2"
+version := "3.1.3"
 
 scalaVersion := "2.11.8"
 
