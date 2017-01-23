@@ -6,7 +6,7 @@ version := "3.1.3"
 
 scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.11.8", "2.12.0-M4")
+crossScalaVersions := Seq("2.11.8", "2.12.1")
 
 scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target:jvm-1.8")
 scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
@@ -16,11 +16,7 @@ scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
 
 libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-assistedinject" % "4.0",
-  "com.typesafe.akka"   %% "akka-actor"   % "2.4.6",
-  "com.typesafe.akka"   %% "akka-testkit" % "2.4.6" % Test
+  "com.typesafe.akka"   %% "akka-actor"   % "2.4.16",
+  "com.typesafe.akka"   %% "akka-testkit" % "2.4.16" % Test,
+  "org.scalatest"       %% "scalatest"    % "3.0.1"  % Test
 )
-
-libraryDependencies += "org.scalatest" %% "scalatest" % (CrossVersion.scalaApiVersion(scalaVersion.value) match {
-  case Some((2, 11)) => "3.0.0-RC1"
-  case _ => "3.0.0-M16-SNAP4"
-}) % Test
