@@ -1,6 +1,6 @@
 akka-guice
 ==========
-[![Build Status](https://travis-ci.org/giabao/akka-guice.svg)](https://travis-ci.org/giabao/akka-guice)
+[![Build Status](https://travis-ci.org/ohze/akka-guice.svg)](https://travis-ci.org/ohze/akka-guice)
 
 ## What?
 
@@ -22,7 +22,7 @@ This is a very simple (so very stable) scala library for injecting [Akka](http:/
 
 1. install [akka-guice from maven center](http://search.maven.org/#search|ga|1|g%3A%22com.sandinh%22%20akka-guice)
  ex, add to build.sbt:
-  `libraryDependencies += "com.sandinh" %% "akka-guice" % "2.0.0"`
+  `libraryDependencies += "com.sandinh" %% "akka-guice" % "3.2.0"`
 
 2. use akka-guice
 
@@ -113,4 +113,4 @@ see [CHANGES.md](CHANGES.md)
 This software is licensed under the Apache 2 license:
 http://www.apache.org/licenses/LICENSE-2.0
 
-Copyright 2014 Sân Đình (http://sandinh.com)
+Copyright 2014-2017 Sân Đình (http://sandinh.com)

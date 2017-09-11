@@ -1,4 +1,13 @@
-pomExtra in Global := <url>https://github.com/giabao/akka-guice</url>
+publishMavenStyle := true
+
+publishTo in Global := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
+
+pomExtra in Global := <url>https://github.com/ohze/akka-guice</url>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -7,8 +16,8 @@ pomExtra in Global := <url>https://github.com/giabao/akka-guice</url>
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/giabao/akka-guice</url>
-    <connection>scm:git:git@github.com:giabao/akka-guice.git</connection>
+    <url>https://github.com/ohze/akka-guice</url>
+    <connection>scm:git:git@github.com:ohze/akka-guice.git</connection>
   </scm>
   <developers>
     <developer>

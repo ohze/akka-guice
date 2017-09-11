@@ -1,6 +1,14 @@
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v3.2.0
++ update akka 2.5.4, scala 2.11.11 & 2.12.3
++ move source code to github.com/ohze/akka-guice
++ building settings change:
+  - update sbt 1.0.1, sbt-sonatype 2.0, sbt-pgp 1.1.0
+  - use sbt-coursier
+  - use sbt-scalafmt-coursier instead of sbt-scalariform
+
 ##### v3.1.3
 + update akka 2.4.6, scala 2.11.8 & 2.12.0-M4
 + add travis test for openjdk8
