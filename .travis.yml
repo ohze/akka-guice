@@ -6,11 +6,11 @@ jdk:
   - openjdk11
 
 env:
-  - TRAVIS_SCALA_VERSION=2.13.1
-  - TRAVIS_SCALA_VERSION=2.12.10
+  - SCALA_VERSION=2.13.1
+  - SCALA_VERSION=2.12.10
 
 script:
-  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sbt ++$SCALA_VERSION test
 
 before_cache:
 # Cleanup the cached directories to avoid unnecessary cache updates
