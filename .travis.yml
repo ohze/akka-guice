@@ -1,17 +1,14 @@
-sudo: required
-dist: trusty
+dist: xenial
 language: scala
 
-scala:
-- 2.11.11
-- 2.12.3
+jdk:
+  - openjdk8
+  - openjdk11
 
 env:
-- JDK=oraclejdk8
-- JDK=openjdk8
-
-before_script:
-  - jdk_switcher use $JDK
+  - TRAVIS_SCALA_VERSION=2.13.1
+  - TRAVIS_SCALA_VERSION=2.12.10
+  - TRAVIS_SCALA_VERSION=2.11.12
 
 script:
   - sbt ++$TRAVIS_SCALA_VERSION test
