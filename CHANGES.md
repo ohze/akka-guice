@@ -1,6 +1,10 @@
 ## Changelogs
 we use [Semantic Versioning](http://semver.org/)
 
+##### v3.3.0
++ update akka 2.6.1, guice 4.2.2
++ support scala 2.13
+
 ##### v3.2.0
 + update akka 2.5.4, scala 2.11.11 & 2.12.3
 + move source code to github.com/ohze/akka-guice

@@ -3,10 +3,12 @@ package com.sandinh.akuice
 import akka.actor._
 import akka.testkit.{ImplicitSender, TestKit}
 import com.google.inject.Guice
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.matchers.should.Matchers
 
 class AkuiceSpec extends TestKit(ActorSystem("foo"))
-    with ImplicitSender with WordSpecLike with Matchers with BeforeAndAfterAll {
+    with ImplicitSender with AnyWordSpecLike with Matchers with BeforeAndAfterAll {
 
   override def afterAll() = TestKit.shutdownActorSystem(system)
 
