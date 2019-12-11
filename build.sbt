@@ -6,7 +6,7 @@ version := "3.3.0-SNAPSHOT"
 
 scalaVersion := "2.13.1"
 
-crossScalaVersions := Seq("2.11.12", "2.12.10", "2.13.1")
+crossScalaVersions := Seq("2.12.10", "2.13.1")
 
 scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target:jvm-1.8")
 scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
