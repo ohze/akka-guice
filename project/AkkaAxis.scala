@@ -14,11 +14,6 @@ case class AkkaAxis private (version: String) extends VirtualAxis.WeakAxis {
   // TODO remove `for3Use2_13` when this issue is fixed: https://github.com/akka/akka/issues/30243
   def module(id: String): ModuleID =
     "com.typesafe.akka" %% s"akka-$id" % version cross for3Use2_13
-
-  def depsSetting: Setting[_] = libraryDependencies ++= Seq(
-    module("actor"),
-    module("testkit") % Test,
-  )
 }
 
 object AkkaAxis {

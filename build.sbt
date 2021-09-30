@@ -7,7 +7,11 @@ lazy val `akka-guice` = projectMatrix
     axisValues = Seq(akka25, VirtualAxis.jvm),
     Seq(
       moduleName := name.value + "_2_5",
-      akka25.depsSetting,
+      libraryDependencies ++= Seq(
+        akka25.module("actor"),
+        akka25.module("testkit") % Test,
+        "com.google.inject.extensions" % "guice-assistedinject" % "4.1.0",
+      ),
     ),
   )
   .customRow(
@@ -15,14 +19,15 @@ lazy val `akka-guice` = projectMatrix
     axisValues = Seq(akka26, VirtualAxis.jvm),
     Seq(
       moduleName := name.value,
-      akka26.depsSetting,
+      libraryDependencies ++= Seq(
+        akka26.module("actor"),
+        akka26.module("testkit") % Test,
+        "com.google.inject.extensions" % "guice-assistedinject" % "4.2.3",
+      ),
     ),
   )
   .settings(
-    libraryDependencies ++= Seq(
-      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.3",
-      "org.scalatest" %% "scalatest" % "3.2.10" % Test,
-    )
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % Test,
   )
 
 inThisBuild(
