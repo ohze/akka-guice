@@ -1,18 +1,8 @@
-organization := "com.sandinh"
-
 name := "akka-guice"
 
-version := "3.3.0"
+scalaVersion := scala213
 
-scalaVersion := "2.13.1"
-
-crossScalaVersions := Seq("2.12.10", "2.13.1")
-
-scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-feature", "-target:jvm-1.8")
-scalacOptions ++= (CrossVersion.scalaApiVersion(scalaVersion.value) match {
-  case Some((2, 11)) => Seq("-Ybackend:GenBCode")
-  case _ => Nil
-})
+crossScalaVersions := Seq(scala212, scala213)
 
 libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-assistedinject" % "4.2.2",
@@ -21,3 +11,17 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % Test
+
+inThisBuild(
+  Seq(
+    versionScheme := Some("semver-spec"),
+    developers := List(
+      Developer(
+        "thanhbv",
+        "Bui Viet Thanh",
+        "thanhbv@sandinh.net",
+        url("https://sandinh.com")
+      ),
+    ),
+  )
+)
