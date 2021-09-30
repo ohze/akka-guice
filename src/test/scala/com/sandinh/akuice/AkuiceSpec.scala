@@ -7,8 +7,12 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 
-class AkuiceSpec extends TestKit(ActorSystem("foo"))
-    with ImplicitSender with AnyWordSpecLike with Matchers with BeforeAndAfterAll {
+class AkuiceSpec
+    extends TestKit(ActorSystem("foo"))
+    with ImplicitSender
+    with AnyWordSpecLike
+    with Matchers
+    with BeforeAndAfterAll {
 
   override def afterAll() = TestKit.shutdownActorSystem(system)
 
@@ -21,8 +25,10 @@ class AkuiceSpec extends TestKit(ActorSystem("foo"))
 
       val foo = "[the fooName value]"
       receiveN(4) map {
-        case (actorName: String, `foo`, "hello!")                           => "fromChild" -> actorName //message from ChildActor
-        case (actorName: String, `foo`, "hello!", i: Integer, "arg2 value") => i -> actorName //message from AssistedChildActor
+        case (actorName: String, `foo`, "hello!") =>
+          "fromChild" -> actorName //message from ChildActor
+        case (actorName: String, `foo`, "hello!", i: Integer, "arg2 value") =>
+          i -> actorName //message from AssistedChildActor
       } should contain theSameElementsAs Seq(
         "fromChild" -> "$a", //"$a" is auto generated actor name
         "fromChild" -> "child2",
