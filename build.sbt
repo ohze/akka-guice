@@ -20,7 +20,7 @@ lazy val `akka-guice` = projectMatrix
   )
   .settings(
     libraryDependencies ++= Seq(
-      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.2",
+      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.3",
       "org.scalatest" %% "scalatest" % "3.2.10" % Test,
     )
   )
