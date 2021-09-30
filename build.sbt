@@ -1,16 +1,29 @@
-name := "akka-guice"
+import AkkaAxis._
 
-scalaVersion := scala213
-
-crossScalaVersions := Seq(scala212, scala213)
-
-libraryDependencies ++= Seq(
-  "com.google.inject.extensions" % "guice-assistedinject" % "4.2.2",
-  "com.typesafe.akka"   %% "akka-actor"   % "2.6.1",
-  "com.typesafe.akka"   %% "akka-testkit" % "2.6.1" % Test
-)
-
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % Test
+lazy val `akka-guice` = projectMatrix
+  .in(file("."))
+  .customRow(
+    scalaVersions = Seq(scala211, scala212, scala213),
+    axisValues = Seq(akka25, VirtualAxis.jvm),
+    Seq(
+      moduleName := name.value + "_2_5",
+      akka25.depsSetting,
+    ),
+  )
+  .customRow(
+    scalaVersions = Seq(scala212, scala213, scala3),
+    axisValues = Seq(akka26, VirtualAxis.jvm),
+    Seq(
+      moduleName := name.value,
+      akka26.depsSetting,
+    ),
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.google.inject.extensions" % "guice-assistedinject" % "4.2.2",
+      "org.scalatest" %% "scalatest" % "3.2.10" % Test,
+    )
+  )
 
 inThisBuild(
   Seq(
