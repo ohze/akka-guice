@@ -1,6 +1,6 @@
 akka-guice
 ==========
-[![Build Status](https://travis-ci.org/ohze/akka-guice.svg)](https://travis-ci.org/ohze/akka-guice)
+[![CI](https://github.com/ohze/akka-guice/actions/workflows/sbt-devops.yml/badge.svg)](https://github.com/ohze/akka-guice/actions/workflows/sbt-devops.yml)
 
 ## What?
 
