@@ -38,3 +38,13 @@ inThisBuild(
     ),
   )
 )
+
+// we need this aggregating project only because
+// `mqtt-proto`'s source is NOT in a subdirectory
+lazy val root = Project("akka-guice", file("."))
+  .settings(skipPublish)
+  .settings(
+    Compile / unmanagedSourceDirectories := Nil,
+    Test / unmanagedSourceDirectories := Nil
+  )
+  .aggregate(`akka-guice`.projectRefs: _*)
