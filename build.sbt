@@ -28,6 +28,16 @@ lazy val `akka-guice` = projectMatrix
   )
   .settings(
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % Test,
+    scalacOptions := {
+      val old = scalacOptions.value
+      CrossVersion.scalaApiVersion(scalaVersion.value) match {
+        case Some((2, n)) if n > 11 =>
+          old :+ raw"-Wconf:msg=isAccessible in class AccessibleObject:i"
+        // TODO remove for scala3 when the following PR is released
+        // https://github.com/lampepfl/dotty/pull/12857
+        case _ => old.filterNot(_ == "-Xfatal-warnings")
+      }
+    },
   )
 
 inThisBuild(
