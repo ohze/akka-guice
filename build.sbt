@@ -40,6 +40,19 @@ lazy val `akka-guice` = projectMatrix
     },
   )
 
+// opens java.base/java.lang for java 16+
+// to workaround error:
+// InaccessibleObjectException: Unable to make protected final java.lang.Class
+//  java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain)
+//  throws java.lang.ClassFormatError accessible:
+//  module java.base does not "opens java.lang" to unnamed module @42a6eabd (ReflectUtils.java:61)
+lazy val javaVersion: Int = scala.sys
+  .props("java.specification.version")
+  .split('.')
+  .dropWhile(_ == "1")
+  .head
+  .toInt
+
 inThisBuild(
   Seq(
     versionScheme := Some("semver-spec"),
@@ -51,6 +64,11 @@ inThisBuild(
         url("https://sandinh.com")
       ),
     ),
+    Test / fork := javaVersion >= 16,
+    Test / javaOptions := {
+      if (javaVersion < 16) Nil
+      else Seq("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+    }
   )
 )
 
