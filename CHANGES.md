@@ -2,11 +2,11 @@
 we use [Semantic Versioning](http://semver.org/)
 
 ##### v3.3.1
-+ support akka 2.5.x in `akka-guice_2_5` module
++ Add back akka 2.5.x * scala 2.11.x in `akka-guice_2_5` module
   - `akka-guice_2_5` compatible (binary & source) with `akka-guice:3.2.0`
 + support scala 3 (for akka 2.6.x only)
 + migrate from travis to github action using [sbt-devops](/ohze/sbt-devops)
-+ Update to latest patch version of akka, scala, guice
++ Update to latest **patch** version of akka, scala, guice
 
 ##### v3.3.0
 + update akka 2.6.1, guice 4.2.2
